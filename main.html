@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Image Downloader</title>
+  <title>Download Images</title>
   <style>
     #loading {
       font-weight: bold;
@@ -20,10 +20,13 @@
 </head>
 <body>
 
-  <h2>Image Downloader</h2>
+  <h2>Parallel Image Downloader</h2>
+
+  <!-- Trigger Button -->
+  <button id="download-images-button">Download Images</button>
 
   <!-- Spinner -->
-  <div id="loading">Loading...</div>
+  <div id="loading" style="display:none;">Loading...</div>
 
   <!-- Error Message -->
   <div id="error"></div>
@@ -33,11 +36,9 @@
 
   <script>
     const imageUrls = [
-      "https://via.placeholder.com/200x150?text=Image+1",
-      "https://via.placeholder.com/200x150?text=Image+2",
-      "https://via.placeholder.com/200x150?text=Image+3"
-      // Uncomment below to test error case:
-      // "https://invalid-url.com/image.png"
+      "https://picsum.photos/id/237/200/300",
+      "https://picsum.photos/id/238/200/300",
+      "https://picsum.photos/id/239/200/300"
     ];
 
     function downloadImage(url) {
@@ -54,7 +55,7 @@
       const errorDiv = document.getElementById("error");
       const outputDiv = document.getElementById("output");
 
-      // Show spinner and reset error/output
+      // Show loading
       loadingDiv.style.display = "block";
       errorDiv.textContent = "";
       outputDiv.innerHTML = "";
@@ -66,16 +67,17 @@
           loadingDiv.style.display = "none";
           images.forEach(img => outputDiv.appendChild(img));
         })
-        .catch(error => {
+        .catch(err => {
           loadingDiv.style.display = "none";
-          errorDiv.textContent = error.message;
+          errorDiv.textContent = err.message;
         });
     }
 
-    // Start downloading images when page loads
-    window.onload = downloadImages;
+    // Add click event
+    document.getElementById("download-images-button").addEventListener("click", downloadImages);
   </script>
 
 </body>
 </html>
+
 
